@@ -1,0 +1,16 @@
+# Build output
+build/
+build.log
+DerivedData/
+Payload/
+
+# XcodeGen output
+*.xcodeproj
+*.xcworkspace
+
+# Artefacts
+*.ipa
+*.dSYM
+
+# macOS
+.DS_Store
