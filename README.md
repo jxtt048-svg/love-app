@@ -15,13 +15,15 @@ Built for a single phone, installed by sideloading. Not on the App Store.
 
 ## Build it
 
-The build runs on GitHub Actions (macOS runner) and produces an **unsigned** `.ipa`:
+The build runs on [Cirrus CI](https://cirrus-ci.com) macOS VMs and produces an **unsigned** `.ipa`:
 
-1. Push to `main`, or run the **Build IPA** workflow manually.
-2. Open the finished run and download the `LoveApp-ipa` artifact.
-3. Unzip it; you get `LoveApp.ipa`.
+1. Install the Cirrus CI app on this repo, once: <https://github.com/apps/cirrus-ci>
+2. Push to `main`, or start a build from the Cirrus dashboard.
+3. Open the finished task and download the `ipa` artifact — it is `LoveApp.ipa`.
 
-Locally you need nothing. No Xcode, no Mac.
+Locally you need nothing. No Xcode, no Mac, no toolchain.
+
+`project.yml` is the source of truth for the Xcode project; `LoveApp.xcodeproj` is generated in CI by XcodeGen and is never committed.
 
 ## Install it (Windows + iPhone)
 
@@ -41,9 +43,9 @@ If that becomes annoying, a paid Apple Developer account ($99/year) signs for a 
 ## Repo layout
 
 ```
+.cirrus.yml                     CI: build unsigned .ipa on a macOS VM
 project.yml                     XcodeGen project definition
 LoveApp/                        app sources
-.github/workflows/build.yml     CI: build unsigned .ipa
 docs/superpowers/specs/         design spec
 docs/superpowers/plans/         implementation plan
 ```
