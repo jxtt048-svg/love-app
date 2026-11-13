@@ -27,9 +27,10 @@ enum Theme {
         static let emberPulse: Double = 2.4
         static let emberFlare: Double = 0.18
         static let starDim: Double = 0.25
-        static let bloom: Double = 0.78
+        /// Spring response for the message bloom.
+        static let bloom: Double = 0.55
         static let heartStagger: Double = 0.3
-        static let heartLife: Double = 3.5
+        static let heartLife: Double = 2.4
         static let haloBreath: Double = 4.5
     }
 }

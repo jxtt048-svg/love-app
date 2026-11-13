@@ -7,6 +7,8 @@ struct MessageView: View {
 
     @ScaledMetric(relativeTo: .largeTitle) private var messageSize: CGFloat = 44
 
+    @State private var haloBreathing = false
+
     var body: some View {
         ZStack {
             RadialGradient(
@@ -21,7 +23,8 @@ struct MessageView: View {
             )
             .frame(width: 380, height: 260)
             .blur(radius: 24)
-            .opacity(progress)
+            // Settles at 12% and breathes up to 18% of the gradient's own alpha.
+            .opacity(progress * (haloBreathing ? 0.82 : 0.55))
 
             Text(Theme.message)
                 .font(.system(size: messageSize, weight: .light, design: .serif))
@@ -38,6 +41,13 @@ struct MessageView: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Theme.message)
         .accessibilityHidden(progress < 0.5)
+        .onAppear {
+            withAnimation(
+                .easeInOut(duration: Theme.Timing.haloBreath).repeatForever(autoreverses: true)
+            ) {
+                haloBreathing = true
+            }
+        }
     }
 }
 

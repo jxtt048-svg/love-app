@@ -127,7 +127,7 @@ targets:
 
 **Files:** `LoveApp/HeartsView.swift`
 
-- Six hearts in a `Canvas` inside `TimelineView(.animation)`, each with fixed seeded parameters: start x offset (−90…90 pt), start delay (0, 0.3, … 1.5 s), rise height (120–220 pt), horizontal wander (±18 pt sine), size (10–16 pt), lifetime 3.5 s.
+- Six hearts rendered as `Image(systemName: "heart.fill")` views, each with fixed seeded parameters: start x offset (−110…110 pt), start delay (0, 0.3, … 1.5 s), rise height (120–220 pt), horizontal wander (±18 pt), size (10–16 pt), lifetime 2.4 s.
 - Heart shape: two arcs plus a path, or `Image(systemName: "heart.fill")` tinted `rose` at 85% opacity. Use the SF Symbol — it is one line and the shape is already correct.
 - Behaviour: `progress ≤ 0` draws nothing; `0 < progress < 1` is animating; `progress ≥ 1` draws nothing. Once finished, the view is removed from the tree by the parent.
 - Reduce Motion: hearts fade in place at their start positions instead of rising.

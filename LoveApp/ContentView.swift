@@ -18,21 +18,24 @@ struct ContentView: View {
     var body: some View {
         GeometryReader { geo in
             ZStack {
-                SkyView(dim: starsDim)
+                SkyView(dim: starsDim, reduceMotion: reduceMotion)
 
                 if phase == .waiting {
                     EmberView(reduceMotion: reduceMotion, action: reveal)
-                        .position(x: geo.size.width / 2, y: geo.size.height * 0.58)
                         .transition(.opacity.combined(with: .scale(scale: 1.4)))
+                        .position(x: geo.size.width / 2, y: geo.size.height * 0.58)
                 }
 
+                // Decorative and non-interactive: it must never swallow the
+                // ember's tap while it is sitting at zero opacity.
                 MessageView(progress: messageProgress, reduceMotion: reduceMotion)
+                    .allowsHitTesting(false)
                     .position(x: geo.size.width / 2, y: geo.size.height * 0.50)
 
                 if showHearts {
                     HeartsView(reduceMotion: reduceMotion)
-                        .position(x: geo.size.width / 2, y: geo.size.height * 0.50)
                         .transition(.opacity)
+                        .position(x: geo.size.width / 2, y: geo.size.height * 0.50)
                 }
             }
             .frame(width: geo.size.width, height: geo.size.height)
@@ -58,7 +61,7 @@ struct ContentView: View {
         }
 
         // The message blooms a beat later.
-        withAnimation(.spring(response: 0.55, dampingFraction: 0.72).delay(0.12)) {
+        withAnimation(.spring(response: Theme.Timing.bloom, dampingFraction: 0.72).delay(0.12)) {
             messageProgress = 1.0
             phase = .revealed
         }

@@ -3,9 +3,16 @@ import SwiftUI
 /// The night sky: a vertical gradient plus 60 stars that drift and twinkle.
 ///
 /// `dim` scales every star's brightness. `1.0` is full brightness, `0.35` is the
-/// moment after the tap when the sky appears to hold its breath.
-struct SkyView: View {
-    var dim: Double = 1.0
+/// moment after the tap when the sky appears to hold its breath. Conforming to
+/// `Animatable` is what lets that change fade instead of snap.
+struct SkyView: View, Animatable {
+    var dim: Double
+    var reduceMotion: Bool = false
+
+    var animatableData: Double {
+        get { dim }
+        set { dim = newValue }
+    }
 
     private static let stars = Star.makeField(count: 60)
 
@@ -17,7 +24,7 @@ struct SkyView: View {
                 endPoint: .bottom
             )
 
-            TimelineView(.animation(minimumInterval: 1.0 / 30.0)) { timeline in
+            TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: reduceMotion)) { timeline in
                 let t = timeline.date.timeIntervalSinceReferenceDate
 
                 Canvas { context, size in
